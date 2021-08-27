@@ -15,7 +15,7 @@ class ScorePanel {
     }
 
     addScore() {
-        this.scoreEle.innerHTML = ++this.score + '';
+        this.scoreEle.innerHTML = 'SCORE:' + ++this.score + '';
     }
 
     levelUp() {

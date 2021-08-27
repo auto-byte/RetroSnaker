@@ -13,8 +13,8 @@ class Food {
     }
 
     change() {
-        let left = Math.round(Math.random() * 29) * 10;
-        let top = Math.round(Math.random() * 29) * 10;
+        let left = Math.floor(Math.random() * 30) * 10;
+        let top = Math.floor(Math.random() * 30) * 10;
         this.element.style.left = left + 'px';
         this.element.style.top = top + 'px';
     }
