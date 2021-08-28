@@ -7,7 +7,6 @@ class Snake {
         this.element = document.getElementById('snake');
         this.head = document.querySelector('#snake > div') as HTMLElement;
         this.bodies = this.element.getElementsByTagName('div');
-        // this.head.style.transition = '0.2s ease';
     }
 
     get X() {
@@ -38,8 +37,21 @@ class Snake {
         this.head.style.top = y + 'px';
     }
 
-    addBody() {
-        this.element.insertAdjacentHTML('beforebegin', '<div class="cube"></div>');
+    addHead(x: number, y: number) {
+        this.head.insertAdjacentHTML('beforebegin', '<div class="cube"></div>');
+        this.head = document.querySelector('#snake > div') as HTMLElement;
+        this.bodies = this.element.getElementsByTagName('div');
+        this.X = x;
+        this.Y = y;
+    }
+
+    moveBody() {
+        for( let i = this.bodies.length - 1; i > 0; i--) {
+            let item = this.bodies[i] as HTMLElement;
+            let pre = this.bodies[i-1] as HTMLElement;
+            item.style.top = pre.style.top;
+            item.style.left = pre.style.left;
+        }
     }
 }
 

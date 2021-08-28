@@ -16,13 +16,16 @@ class ScorePanel {
 
     addScore() {
         this.scoreEle.innerHTML = 'SCORE:' + ++this.score + '';
+        if (this.score % 5 === 0) {
+            this.levelUp();
+        }
     }
 
     levelUp() {
         if (this.level >= this.maxLevel) {
             return;
         }
-        this.levelEle.innerHTML = ++this.level + '';
+        this.levelEle.innerHTML = 'LEVEL:' + ++this.level + '';
         this.upScore += this.upScoreStep;
     }
 

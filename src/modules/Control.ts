@@ -15,11 +15,12 @@ class Control {
         this.snake = new Snake();
         this.scorePanel = new ScorePanel();
         this.direction = 'right';
-        this.keyMap = { "ArrowRight": "right", "ArrowLeft": "left", "ArrowUp": "up", "ArrowDown": "down" }
-        this.init();
-    }
-
-    init() {
+        this.keyMap = {
+            "ArrowRight": "right",
+            "ArrowLeft": "left",
+            "ArrowUp": "up",
+            "ArrowDown": "down"
+        }
         document.addEventListener('keydown', this.keydownHandler.bind(this));
         document.querySelector('button').addEventListener('click', this.start.bind(this));
         this.alive = false;
@@ -34,13 +35,15 @@ class Control {
         if (!this.alive) {
             this.alive = true;
             this.run();
+        } else {
+            this.alive = false;
         }
+        console.log("start")
     }
 
     run() {
         let x = this.snake.X;
         let y = this.snake.Y;
-        console.log(x, y);
         switch (this.direction) {
             case "right":
                 x += 10;
@@ -55,24 +58,30 @@ class Control {
                 y += 10;
                 break;
         }
-        try {
-            this.snake.X = x;
-            this.snake.Y = y;
-        } catch (error) {
-            alert("啊噢");
-            this.alive = false;
+
+        if (!this.eatFood(x, y)) {
+            try {
+                this.snake.moveBody();
+                this.snake.X = x;
+                this.snake.Y = y;
+            } catch (error) {
+                alert("啊噢");
+                this.alive = false;
+            }
         }
-        this.eatFood();
         if (this.alive) {
-            setTimeout(this.run.bind(this), 300 - this.scorePanel.level);
+            setTimeout(this.run.bind(this), 100 - this.scorePanel.level);
         }
     }
 
-    eatFood() {
-        if (this.snake.X === this.food.X && this.snake.Y === this.food.Y) {
+    eatFood(x: number, y: number): boolean {
+        if (x === this.food.X && y === this.food.Y) {
             this.food.change();
             this.scorePanel.addScore();
+            this.snake.addHead(x, y);
+            return true;
         }
+        return false;
     }
 }
 
